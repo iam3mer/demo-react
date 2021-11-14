@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS</title>
+</head>
+<body>
+  <script>
+  function contar() {
+    for (let i = 1; i < 4; i++) {
+      alert(`Voy en: ${i}`)
+    }
+  }
+  </script>
+
+  <!-- DOMContentLoaded -->
+
+  <!-- Atributo: on[event] -->
+  <input type="button" value="handlerHTML" onclick="alert('Hola Tripulantes!')">
+  <input type="button" value="Contar" ONCLICK="contar()">
+
+  <!-- DOM -->
+  <input id="elem" type="button" value="DOM">
+  <input id="elem2" type="button" value="Contar2">
+
+  <!-- this -->
+  <button onclick="alert(this.innerHTML)">Estamos aprendiendo sobre eventos</button>
+
+  <!-- addEventListener -->
+  <button id="elem3">addEventListener</button>
+  <p id="parrafo"></p>
+
+  <!-- Objeto del evento -->
+  <button id="elem4">Coordenadas</button>
+  <p id="parrafo2"></p>
+
+  <!---->
+  <button id="elem5">Objeto</button>
+  <button id="elem6">Clase</button>
+
+  <script>
+    elem.onclick = function() {
+      alert('Me ejecuto desde una propiedad del DOM!')
+    }
+
+    elem.onclick = function() { // Este handler sobre escribe al anterior
+      alert('Otro handler!')
+      elem.onclick = null // Elimina el handler
+    }
+
+    elem2.onclick = contar // Para usar funciones existentes como handler no se debe usar ()
+
+    function mostrarParrafo() {
+      document.getElementById("parrafo").innerHTML = 'Seguimos aprendiendo de eventos!';
+    }
+
+    elem3.addEventListener('click', () => alert('Soy el addEventListener!'))
+    elem3.addEventListener('click', mostrarParrafo)
+
+    document.onDOMContentLoaded = function() { // Esto no funciona, hay eventos que solo se ejecutan desde addEventListener
+      alert('DOM Completo!')
+    }
+    // document.addEventListener('DOMContentLoaded', function() {
+    //   alert('DOM Completo!')
+    // })
+
+    elem4.onclick = (evt) => {
+      console.log(evt)
+      alert(`Coordenadas: ${evt.clientX}, ${evt.clientY}`)
+      document.getElementById("parrafo2").innerHTML = `Evento: '${evt.type}' en el elemento ${evt.currentTarget}`
+    }
+
+    let obj = {
+      handleEvent(evt) {
+        alert(`Evento: '${evt.type}' en el elemento ${evt.currentTarget}`)
+      }
+    }
+    elem5.addEventListener('click', obj)
+
+    class Clase {
+      handleEvent(evt) {
+        switch (evt.type) {
+          case 'mousedown':
+            elem6.innerHTML = 'Me hicierón click'
+            break;
+        
+          case 'mouseup':
+            elem6.innerHTML = 'Ahora me liberaron!'
+            break;
+        }
+      }
+    }
+
+    // class Clase {
+    //   handleEvent(evt) {
+    //     let method = 'on' + evt.type[0].toUpperCase() + evt.type.slice(1)
+    //     this[method](evt)
+    //   }
+
+    //   onMousedown() {
+    //     elem6.innerHTML = 'Me hicierón click'
+    //   }
+
+    //   onMouseup() {
+    //     elem6.innerHTML = 'Ahora me liberaron!'
+    //   }
+    // }
+
+    let clase = new Clase()
+    elem6.addEventListener('mousedown', clase)
+    elem6.addEventListener('mouseup', clase)
+  </script>
+</body>
+</html>
